@@ -1,0 +1,118 @@
+<odoo>
+
+    <record id="player_tree_view" model="ir.ui.view">
+        <field name="name">Players</field>
+        <field name="model">csgo_player_statistics.player</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="country"/>
+                <field name="name"/>
+                <field name="nickname"/>
+                <field name="rating"/>
+                <field name="maps_played"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="player_form_view" model="ir.ui.view">
+        <field name="name">Players</field>
+        <field name="model">csgo_player_statistics.player</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="nickname"/>
+                    </group>
+                    <notebook>
+                        <page string="Player info">
+                            <p>Name: <field name="name"/></p>
+                            <p>Country: <field name="country"/></p>
+                        </page>
+                        <page string="Game info">
+                            <p>Nickname: <field name="nickname"/></p>
+                            <p>Rating: <field name="rating"/></p>
+                            <p>Maps playes: <field name="maps_played"/></p>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="player_kanban_view" model="ir.ui.view">
+        <field name="name">Players</field>
+        <field name="model">csgo_player_statistics.player</field>
+        <field name="arch" type="xml">
+            <kanban class="o_res_partner_kanban">
+                <field name="country"/>
+                <field name="name"/>
+                <field name="maps_played"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="o_kanban_image"></div>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title">
+                                    <p>Nickname: <field name="nickname"/></p>
+                                    <p>Rating: <field name="rating"/></p>
+                                </strong>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="player_graph_view" model="ir.ui.view">
+        <field name="name">Players</field>
+        <field name="model">csgo_player_statistics.player</field>
+        <field name="arch" type="xml">
+            <graph>
+                <field name="nickname"/>
+                <field name="rating" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="player_filter_view" model="ir.ui.view">
+        <field name="name">Players</field>
+        <field name="model">csgo_player_statistics.player</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="country"/>
+                <field name="name"/>
+                <field name="nickname"/>
+                <field name="rating"/>
+                <field name="maps_played"/>
+                <filter name="Rating >= 1.2" domain="[('rating', '>=', '1.2')]" help = "Players with a rating >= 1.2"></filter>
+                <filter name="France" domain="[('country', '=', 'France')]" help = "Players from France"></filter>
+                <group expand="1" string="Group By">
+                    <filter string="Country" name="country" context="{'group_by': 'country'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="player_list" model="ir.actions.act_window">
+        <field name="name">Players</field>
+        <field name="res_model">csgo_player_statistics.player</field>
+        <field name="view_mode">tree,kanban,form,graph</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Sorry, no players</p>
+        </field>
+    </record>
+
+    <record id="update_players" model="ir.actions.server">
+            <field name="name">Update players</field>
+            <field name="model_id" ref="csgo_player_statistics.model_csgo_player_statistics_player"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = model.update_players()
+            </field>
+    </record>
+    
+    <menuitem id="main_csgo_player_statistics_menu" name="CSGO Player Statistics" action="player_list"/>
+    <menuitem id="update_players_menu"  name="Update players"  action="update_players" parent="main_csgo_player_statistics_menu"/>
+
+</odoo>

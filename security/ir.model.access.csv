@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+player_read_all,player all,model_csgo_player_statistics_player,,1,1,1,1

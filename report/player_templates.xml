@@ -1,0 +1,15 @@
+<odoo>
+    <template id="player_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <h2>Report player <span t-field="o.nickname"/></h2>
+                    <p>Name: <span t-field="o.name"/></p>
+                    <p>Country: <span t-field="o.country"/></p>
+                    <p>Rating: <span t-field="o.rating"/></p>
+                    <p>Maps playes: <span t-field="o.maps_played"/></p>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
